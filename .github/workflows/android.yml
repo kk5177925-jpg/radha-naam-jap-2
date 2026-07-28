@@ -65,7 +65,7 @@ jobs:
   build-native-kotlin-apk:
     name: Build Native Kotlin Android APK
     runs-on: ubuntu-latest
-   if: ${{ hashFiles('android_native/build.gradle') != '' }}
+    if: ${{ hashFiles('android_native/build.gradle') != '' }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
