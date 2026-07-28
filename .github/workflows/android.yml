@@ -86,7 +86,7 @@ jobs:
 
       - name: Upload Native Kotlin Debug APK
         uses: actions/upload-artifact@v4
-        with:
-          name: RadhaJaap-Native-Kotlin-Debug-APK
-          path: android_native/app/build/outputs/apk/debug/*.apk
-path:          retention-days: 30
+            with:
+      name: RadhaJaap-Native-Kotlin-Debug-APK
+      path: android_native/app/build/outputs/apk/debug/*.apk
+      retention-days: 30
