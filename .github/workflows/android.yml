@@ -58,8 +58,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: RadhaJaap-Capacitor-Debug-APK
-          path: |
-            android/app/build/outputs/apk/debug/*.apk
+          path:
             android_new/app/build/outputs/apk/debug/*.apk
           retention-days: 30
 
@@ -90,4 +89,4 @@ jobs:
         with:
           name: RadhaJaap-Native-Kotlin-Debug-APK
           path: android_native/app/build/outputs/apk/debug/*.apk
-          retention-days: 30
+path:          retention-days: 30
