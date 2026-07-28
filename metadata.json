@@ -1,0 +1,6 @@
+{
+  "name": "Radha Naam Jap",
+  "description": "Devotional Radha Naam Jap counter app with glowing central Jap button, voice & temple bell audio, gentle vibration, daily and lifetime counts, milestone celebrations, statistics, and theme settings.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

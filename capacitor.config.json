@@ -1,0 +1,16 @@
+{
+  "appId": "com.radhajap.app",
+  "appName": "Radha Jaap",
+  "webDir": "dist",
+  "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "https"
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 1500,
+      "backgroundColor": "#1a0b00",
+      "showSpinner": false
+    }
+  }
+}

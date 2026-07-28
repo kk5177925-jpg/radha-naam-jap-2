@@ -1,0 +1,83 @@
+@import "tailwindcss";
+
+@layer utilities {
+  .font-devanagari {
+    font-family: 'Rozha One', 'Tiro Devanagari Hindi', 'Kalam', serif;
+  }
+  .font-kalam {
+    font-family: 'Kalam', 'Tiro Devanagari Hindi', cursive;
+  }
+  .font-cinzel {
+    font-family: 'Cinzel', serif;
+  }
+  .font-poppins {
+    font-family: 'Poppins', sans-serif;
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 25px rgba(245, 158, 11, 0.5), 0 0 50px rgba(217, 119, 6, 0.3), inset 0 0 20px rgba(254, 243, 199, 0.4);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 45px rgba(245, 158, 11, 0.8), 0 0 80px rgba(217, 119, 6, 0.5), inset 0 0 35px rgba(254, 243, 199, 0.7);
+    transform: scale(1.02);
+  }
+}
+
+@keyframes textGlow {
+  0%, 100% {
+    text-shadow: 0 0 10px rgba(254, 243, 199, 0.8), 0 0 20px rgba(245, 158, 11, 0.6), 0 0 30px rgba(217, 119, 6, 0.4);
+  }
+  50% {
+    text-shadow: 0 0 20px rgba(255, 255, 255, 1), 0 0 35px rgba(245, 158, 11, 0.9), 0 0 50px rgba(217, 119, 6, 0.7);
+  }
+}
+
+@keyframes ringRipple {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 3s infinite ease-in-out;
+}
+
+.animate-text-glow {
+  animation: textGlow 2.5s infinite ease-in-out;
+}
+
+.animate-ring-ripple {
+  animation: ringRipple 1.2s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(30, 10, 2, 0.5);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(217, 119, 6, 0.5);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(245, 158, 11, 0.8);
+}
+
+/* Disable selection and touch tap highlight */
+body {
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
