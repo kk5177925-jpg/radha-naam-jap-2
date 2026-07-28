@@ -1,15 +1,16 @@
-name: Build Android Debug APK
+name: Build Android Debug APKs
 
 on:
   push:
-    branches:
-      - main
+    branches: [ "**" ]
+  pull_request:
+    branches: [ "**" ]
   workflow_dispatch:
 
 jobs:
-  build:
+  build-capacitor-apk:
+    name: Build Capacitor Android APK
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -17,28 +18,79 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: '20'
+          cache: 'npm'
 
       - name: Setup JDK 17
         uses: actions/setup-java@v4
         with:
-          distribution: temurin
-          java-version: 17
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'gradle'
 
-      - name: Install Dependencies
-        run: npm install
+      - name: Install NPM Dependencies
+        run: npm ci
 
-      - name: Sync Capacitor
-        run: npx cap sync android
+      - name: Build Web Application
+        run: npm run build
 
-      - name: Grant Permission
-        run: chmod +x android/gradlew
+      - name: Sync Capacitor Android
+        run: |
+          npx cap sync android || true
+          if [ -d "android_new" ]; then
+            cp -r dist/* android_new/app/src/main/assets/public/ 2>/dev/null || true
+          fi
 
-      - name: Build APK
-        run: cd android && ./gradlew assembleDebug
+      - name: Grant Execute Permission for Gradlew
+        run: |
+          chmod +x android/gradlew 2>/dev/null || true
+          chmod +x android_new/gradlew 2>/dev/null || true
 
-      - name: Upload APK
+      - name: Build Debug APK (Capacitor)
+        run: |
+          if [ -d "android" ]; then
+            cd android && ./gradlew assembleDebug --stacktrace
+          elif [ -d "android_new" ]; then
+            cd android_new && ./gradlew assembleDebug --stacktrace
+          fi
+
+      - name: Upload Capacitor Debug APK
         uses: actions/upload-artifact@v4
         with:
-          name: app-debug-apk
-          path: android/app/build/outputs/apk/debug/app-debug.apk
+          name: RadhaJaap-Capacitor-Debug-APK
+          path:
+            android_new/app/build/outputs/apk/debug/*.apk
+          retention-days: 30
+
+  build-native-kotlin-apk:
+    name: Build Native Kotlin Android APK
+    runs-on: ubuntu-latest
+    if: ${{ hashFiles('android_native/build.gradle') != '' }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'gradle'
+
+      - name: Grant Execute Permission for Gradlew
+        run: chmod +x android_native/gradlew 2>/dev/null || true
+
+      - name: Build Debug APK (Native Kotlin)
+        run: |
+           cd android_native && ./gradlew assembleDebug --stacktrace
+           
+           - name: Build Debug APK (Native Kotlin)
+  run: |
+    cd android_native && ./gradlew assembleDebug --stacktrace
+      
+      - name: Upload Native Kotlin Debug APK
+          uses: actions/upload-artifact@v4
+  with:
+          name: RadhaJaap-Native-Kotlin-Debug-APK
+          path: android_native/app/build/outputs/apk/debug/*.apk
+         retention-days: 30
